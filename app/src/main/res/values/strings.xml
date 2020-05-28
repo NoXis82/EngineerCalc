@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">EngineerCalc</string>
+    <string name="begin_value">0</string>
+    <string name="button_0">0</string>
+    <string name="button_point">.</string>
+    <string name="action_plus">+</string>
+    <string name="action_equally">=</string>
+    <string name="action_minus">-</string>
+    <string name="action_multi">*</string>
+    <string name="action_div">/</string>
+    <string name="button_1">1</string>
+    <string name="button_2">2</string>
+    <string name="button_3">3</string>
+    <string name="button_4">4</string>
+    <string name="button_5">5</string>
+    <string name="button_6">6</string>
+    <string name="button_7">7</string>
+    <string name="button_8">8</string>
+    <string name="button_9">9</string>
+    <string name="button_clear">c</string>
+    <string name="action_percent">%</string>
+    <string name="button_mc">mc</string>
+    <string name="button_m_add">m+</string>
+    <string name="button_m_dec">m-</string>
+    <string name="button_mr">mr</string>
+    <string name="button_sin">sin</string>
+    <string name="button_cos">cos</string>
+    <string name="button_tan">tan</string>
+    <string name="button_pi">П</string>
+    <string name="fraction">1/x</string>
+    <string name="factorial">x!</string>
+    <string name="button_rad">rad</string>
+    <string name="symbol">+/-</string>
+
+</resources>
