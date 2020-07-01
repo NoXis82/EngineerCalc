@@ -31,5 +31,9 @@
     <string name="factorial">x!</string>
     <string name="button_rad">rad</string>
     <string name="symbol">+/-</string>
+    <string name="option_item">Настройки</string>
+    <string name="name_file">Имя файла</string>
+    <string name="load_btn">Загрузить</string>
+
 
 </resources>
