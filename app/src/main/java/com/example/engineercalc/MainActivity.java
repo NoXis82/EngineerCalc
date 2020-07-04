@@ -1,10 +1,13 @@
 package com.example.engineercalc;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,8 +18,11 @@ import android.widget.ImageView;
 import android.widget.Switch;
 
 public class MainActivity extends AppCompatActivity {
-    FrameLayout beginCalc;
-    Switch switchType;
+    private FrameLayout beginCalc;
+    private Switch switchType;
+    private ImageView imgBegin;
+    private ImageView imgEngineer;
+    private static final int SETTINGS_REQUEST_CODE = 345;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +47,29 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void selectionMenuId(@MenuIntDef int id) {
+    private void selectionMenuId(@MenuIntDef int id) {
         switch (id) {
             case MenuIntDef.OPTIONS:
                 Intent intentOption = new Intent(MainActivity.this,
                         OptionActivity.class);
-                startActivity(intentOption);
+                startActivityForResult(intentOption, SETTINGS_REQUEST_CODE);
                 break;
         }
     }
 
-    public void changeType() {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SETTINGS_REQUEST_CODE &&
+                resultCode == RESULT_OK && data != null) {
+            String imagePath = OptionActivity.getImagePathFromIntent(data);
+            Bitmap image = BitmapFactory.decodeFile(imagePath);
+            imgBegin.setImageBitmap(image);
+            imgEngineer.setImageBitmap(image);
+        }
+    }
+
+    private void changeType() {
         switchType.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -64,9 +82,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void initView() {
+    private void initView() {
         beginCalc = findViewById(R.id.begin_calc);
         switchType = findViewById(R.id.switch_type);
-
+        imgBegin = findViewById(R.id.background_begin_calc);
+        imgEngineer = findViewById(R.id.background_engineer_calc);
     }
 }

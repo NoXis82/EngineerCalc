@@ -35,5 +35,7 @@
     <string name="name_file">Имя файла</string>
     <string name="load_btn">Загрузить</string>
 
+    <string name="file_not_found">Файл не найден</string>
+    <string name="no_access">Нет доступа</string>
 
 </resources>

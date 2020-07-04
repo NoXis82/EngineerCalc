@@ -1,31 +1,25 @@
 package com.example.engineercalc;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
-
 import java.io.File;
-import java.io.IOException;
 
-import static android.provider.CalendarContract.CalendarCache.URI;
 
 public class OptionActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_WRITE = 100;
+    private static final String IMAGE_KEY = "IMAGE_KEY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +34,6 @@ public class OptionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 permissionCheck();
-                Intent intentMain = new Intent(OptionActivity.this,
-                        MainActivity.class);
-                startActivity(intentMain);
-                finish();
             }
         });
     }
@@ -65,29 +55,27 @@ public class OptionActivity extends AppCompatActivity {
         String name = fileName.getText().toString();
         if (isExternalStorageWritable()) {
             File file = new File(Environment
-                    .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                    .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                     name);
-            ImageView img = findViewById(R.id.image_background);
-            Bitmap map = BitmapFactory.decodeFile(file.getAbsolutePath());
-            if (map != null) {
-                img.setImageBitmap(map);
-            } else {
+            if (!file.exists()) {
                 Toast.makeText(this,
-                        "Фаил не найден",
+                        R.string.file_not_found,
                         Toast.LENGTH_SHORT).show();
+                return;
             }
+            setResult(RESULT_OK, new Intent().putExtra(IMAGE_KEY, file.getAbsolutePath()));
+            finish();
         }
+    }
+
+    @Nullable
+    public static String getImagePathFromIntent(@NonNull Intent intent) {
+        return intent.getStringExtra(IMAGE_KEY);
     }
 
     public boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(state);
-    }
-
-    public boolean isExternalStorageReadable() {
-        String state = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
     }
 
     @Override
@@ -101,7 +89,7 @@ public class OptionActivity extends AppCompatActivity {
                     loadImg();
                 } else {
                     Toast.makeText(this,
-                            "Нет доступа",
+                            R.string.no_access,
                             Toast.LENGTH_SHORT).show();
                 }
         }
